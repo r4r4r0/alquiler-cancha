@@ -144,7 +144,7 @@ class Inicio extends CI_Controller{
       {
         // NOTE: Cambiar esta parte por algo más estético...
         $error = array('error' => $this->upload->display_errors());
-        echo "$error";
+        print_r($error);
       }
       else
       {

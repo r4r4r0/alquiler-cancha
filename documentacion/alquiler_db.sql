@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema alquilercancha
+-- Schema id2961679_alquiler
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema alquilercancha
+-- Schema id2961679_alquiler
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `alquilercancha` DEFAULT CHARACTER SET utf8 ;
-USE `alquilercancha` ;
+CREATE SCHEMA IF NOT EXISTS `id2961679_alquiler` DEFAULT CHARACTER SET utf8 ;
+USE `id2961679_alquiler` ;
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`departamentos`
+-- Table `id2961679_alquiler`.`departamentos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`departamentos` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`departamentos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NULL,
   `descripcion` VARCHAR(100) NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`provincia`
+-- Table `id2961679_alquiler`.`provincia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`provincia` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`provincia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NULL,
   `descripcion` VARCHAR(100) NULL,
@@ -40,16 +40,16 @@ CREATE TABLE IF NOT EXISTS `alquilercancha`.`provincia` (
   INDEX `prov.depa_idx` (`iddepartamento` ASC),
   CONSTRAINT `prov.depa`
     FOREIGN KEY (`iddepartamento`)
-    REFERENCES `alquilercancha`.`departamentos` (`id`)
+    REFERENCES `id2961679_alquiler`.`departamentos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`distrito`
+-- Table `id2961679_alquiler`.`distrito`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`distrito` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`distrito` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NULL,
   `descripcion` VARCHAR(100) NULL,
@@ -58,16 +58,16 @@ CREATE TABLE IF NOT EXISTS `alquilercancha`.`distrito` (
   INDEX `dist.prov_idx` (`idprovincia` ASC),
   CONSTRAINT `dist.prov`
     FOREIGN KEY (`idprovincia`)
-    REFERENCES `alquilercancha`.`provincia` (`id`)
+    REFERENCES `id2961679_alquiler`.`provincia` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`tipousuario`
+-- Table `id2961679_alquiler`.`tipousuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`tipousuario` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`tipousuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `descripcion` VARCHAR(45) NULL,
@@ -76,9 +76,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`usuario`
+-- Table `id2961679_alquiler`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`usuario` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `contrasena` VARCHAR(45) NULL,
@@ -88,16 +88,16 @@ CREATE TABLE IF NOT EXISTS `alquilercancha`.`usuario` (
   INDEX `usua.tipou_idx` (`idtipousuario` ASC),
   CONSTRAINT `usua.tipou`
     FOREIGN KEY (`idtipousuario`)
-    REFERENCES `alquilercancha`.`tipousuario` (`id`)
+    REFERENCES `id2961679_alquiler`.`tipousuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `alquilercancha`.`cliente`
+-- Table `id2961679_alquiler`.`cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `alquilercancha`.`cliente` (
+CREATE TABLE IF NOT EXISTS `id2961679_alquiler`.`cliente` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `dni` VARCHAR(8) NULL,
   `apepater` VARCHAR(45) NULL,
@@ -112,12 +112,12 @@ CREATE TABLE IF NOT EXISTS `alquilercancha`.`cliente` (
   INDEX `clie,usua_idx` (`idusuario` ASC),
   CONSTRAINT `clie.dist`
     FOREIGN KEY (`iddistrito`)
-    REFERENCES `alquilercancha`.`distrito` (`id`)
+    REFERENCES `id2961679_alquiler`.`distrito` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `clie,usua`
     FOREIGN KEY (`idusuario`)
-    REFERENCES `alquilercancha`.`usuario` (`id`)
+    REFERENCES `id2961679_alquiler`.`usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

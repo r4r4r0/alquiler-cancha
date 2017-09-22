@@ -1,0 +1,100 @@
+
+$primary-color: #7603d0
+$accent-color: #1B9AAA
+$secondary-color: #5B3D5F
+
+*, *::before, *::after
+  box-sizing: border-box
+
+
+a
+  color: #eee
+  outline: 0
+  text-decoration: none
+
+  a:focus, a:hover
+  text-decoration: underline
+
+.site__container
+  // background-color: #2c3338
+  // color: #606468
+  font: 400 0.875rem/1.5 "Open Sans", sans-serif
+  margin: 0
+  padding: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 100vh
+  background: linear-gradient(180deg, white 90%, $primary-color 10%)
+
+.line
+  height: 5px
+  width: 100%
+  align-self: flex-start
+  position: fixed
+  background-color: $primary-color
+  box-shadow: 3px 2px 3px grey
+
+.main__container
+  border: 1px solid $primary-color
+  border-radius: 3px
+  // box-shadow: 5px 5px 10px #d0d0d0
+  background-color: white
+
+.alerta-ingresar
+  border: 1px solid
+  align-self: flex-start
+  position: absolute
+  margin: 50px 0px
+  padding: 10px
+  min-width: 300px
+  border-radius: 3px
+
+.alerta-error
+  background-color: lighten(red, 22)
+  color: white
+
+.form
+  &__login
+    padding: 10px
+    min-width: 300px
+
+  &__field
+    min-height: 70px
+    padding: 10px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+
+  &__label
+    margin-bottom: 5px
+    color: #2c3338
+
+  &__input
+    padding: 10px
+    border-radius: 3px
+    color: white
+    background-color: $accent-color
+    border: 0px transparent
+    &:focus
+      background-color: darken($accent-color, 10)
+      box-sizing: 10px 10px  2px whitesmoke
+
+  &__submit
+    padding: 10px
+    border-radius: 3px
+    background-color: $primary-color
+    color: white
+    border: none
+    &:hover
+      background-color: lighten($primary-color, 10)
+      cursor: pointer
+
+  &__desc
+    margin: 5px 0px
+    &--error
+      color: red
+
+.titulo
+  color: $accent-color
+  font-size: 18px

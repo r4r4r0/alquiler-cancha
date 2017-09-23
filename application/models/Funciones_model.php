@@ -28,13 +28,13 @@ class Funciones_model extends CI_Model
 
   public function actualizar($id, $data = array())
   {
-    $this->db->where('Id', $id);
+    $this->db->where('id', $id);
     $this->db->update($this->tabla, $data);
   }
 
   public function obtenerPorId($id)
   {
-    $this->db->where('Id', $id);
+    $this->db->where('id', $id);
     $consulta = $this->db->get($this->tabla);
     return $consulta;
   }
@@ -50,6 +50,7 @@ class Funciones_model extends CI_Model
     $this->db->where($columna, $valor);
     $this->db->from($this->tabla);
     $consulta = $this->db->get();
+
     return $consulta;
   }
 

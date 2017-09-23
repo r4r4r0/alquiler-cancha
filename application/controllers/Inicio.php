@@ -6,23 +6,132 @@ class Inicio extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    $this->output->enable_profiler(TRUE);
   }
 
-  function index()
+  /**
+	 * Función principal de la clase a la que llama por defecto.
+	 *
+	 * Realiza una verificación si se ha generado un log de los
+	 * registros necesarios para la aplicación, si no, llama a
+	 * la librería donde se encuentran las funciones para la
+	 * inserción de registros necesarios.
+	 *
+	 * @return void
+	 */
+  public function index()
+	{
+    if ( ! $this->session->userdata('sesion_id_usuario'))
+    {
+      $this->ingresar();
+    }
+    else
+    {
+      $this->dashboard();
+    }
+
+	}
+
+  public function dashboard()
   {
-    $data['titulo'] = "Inicio";
+    $data['titulo'] = "¡Bienvenido!";
+    $data['pagina'] = "inicio/index";
     $this->load->view('layouts/base', $data);
   }
 
-  public function login()
+  public function ingresar()
   {
-    $data['titulo'] = "Iniciar sesión";
-    $data['pagina'] = "inicio/login_v";
-    $this->load->view('layouts/login', $data);
+    $this->load->model('usuario_model');
+
+    $mensaje = "";
+
+    /*
+     * ------------------------------------------------------
+     * Validación de los datos del formulario
+     * ------------------------------------------------------
+     */
+    $this->form_validation->set_rules('input-usuario', 'Nombre de usuaro', 'required');
+    $this->form_validation->set_rules('input-contrasena', 'Contraseña', 'required');
+
+    $this->form_validation->set_error_delimiters('<span class="form__desc--error">', '</span>');
+
+    if ($this->form_validation->run() == FALSE)
+    {
+      $data['titulo'] = "Iniciar sesión";
+      $this->load->view('layouts/ingresar', $data);
+    }
+    else
+    {
+      /*
+       * ------------------------------------------------------
+       * Obtiene los datos del formulario
+       * ------------------------------------------------------
+       */
+      // Usuario
+      $usuario = $this->security->xss_clean(strip_tags($this->input->post('input-usuario')));
+
+      // Contraseña
+      $contrasena = $this->security->xss_clean(strip_tags($this->input->post('input-contrasena')));
+
+      // Verifica que el usuario esté registrado en la base de datos
+      $usr_db = $this->usuario_model->obtenerPorCampo('nombre', $usuario);
+
+      // Si el mensaje no está en la base de datos...
+      // no hay nada que se pueda hacer :(
+      if ($usr_db->num_rows() <= 0)
+      {
+        $this->mostrarMensaje("El usuario $usuario no existe.");
+        redirect(base_url().'index.php/inicio/ingresar');
+        return 0;
+      }
+
+      //
+      // Verifica el nombre de usuario y contraseña,
+      // si la consulta no arroja ningún resultado
+      // la contraseña o el nombre de usaurio es
+      // incorrecto :/
+      //
+      $query = $this->usuario_model->verificarUsuario($usuario, $contrasena);
+      if (is_int($query))
+      {
+        if ($query == 0)
+        {
+          $this->mostrarMensaje("El usuario o contrasena es incorrecta");
+          redirect(base_url().'index.php/inicio/ingresar');
+          return 0;
+        }
+      }
+
+
+      $this->output->enable_profiler(TRUE);
+      // Si ha llegado a este punto, significa que
+      // el usuario y contraseña son correctos
+      // entonces realiza los datos de sesión
+      $usr = $query->row();
+      $datosSesion = array(
+					'sesion_id_usuario'         		=> $usr->id,
+					'sesion_nombre_usuario'     		=> $usr->nombre,
+          'sesion_foto_usuario'           => $usr->fotografia,
+          'sesion_tipo_usuario'           => $usr->idtipousuario
+			);
+			$this->session->set_userdata($datosSesion);
+
+      echo $this->session->userdata('sesion_id_usuario');
+      echo "<br>";
+      echo $this->session->userdata('sesion_nombre_usuario');
+
+      redirect(base_url());
+
+    }
+
   }
 
-  public function nuevoRegistro()
+  private function mostrarMensaje($mensaje)
+  {
+    $new_flashdata = array('mensaje' => $mensaje);
+    $this->session->set_flashdata($new_flashdata);
+  }
+
+  public function registrar()
   {
     $this->load->model('cliente_model');
     $this->load->model('usuario_model');
@@ -70,14 +179,23 @@ class Inicio extends CI_Controller{
     // Repetir contraseña del usuario
     $this->form_validation->set_rules('input-repcontra', 'Repetir contraseña', 'trim|required|matches[input-contra]', array('matches' => 'La contraseña no coincide con la que ha establecido.'));
 
+    // Departamento
+    $this->form_validation->set_rules('input-departamento', 'Departamento', 'trim|required|numeric');
+
+    // Provincia
+    $this->form_validation->set_rules('input-provincia', 'Provincia', 'trim|required|numeric');
+
+    // Distrito
+    $this->form_validation->set_rules('input-distrito', 'Distrito', 'trim|required|numeric');
+
     // Establece los delimitadores
     $this->form_validation->set_error_delimiters('<div class="form-error">', '</div>');
 
     if ($this->form_validation->run() == FALSE)
     {
-      $data['titulo'] = "Nuevo registro";
-      $data['pagina'] = "inicio/formNueReg_v";
-      $this->load->view('layouts/login', $data);
+      $data['titulo'] = "Nuevo cliente";
+      $data['pagina'] = "inicio/registrar_v";
+      $this->load->view('layouts/base', $data);
     }
     else
     {
@@ -129,6 +247,7 @@ class Inicio extends CI_Controller{
       // NOTE: Recordar encriptar la contraseña
       $dataUsuario['contrasena'] = $this->security->xss_clean(strip_tags($this->input->post('input-contra')));
 
+      // NOTE: Cambiar esto, se debe de pedir también el tipo de usuario que se vaya a registrar
       // Establece el tipo de usuario
       $dataUsuario['idtipousuario'] = 2; // Tipo de usuario cliente
 
@@ -169,26 +288,19 @@ class Inicio extends CI_Controller{
       $dataCliente['idusuario'] = $usuario->id;
       $this->cliente_model->insertar($dataCliente);
 
-      //
-      // Establece los datos de inicio de sesión
-      //
-      $dataSesion = array(
-        'sesion_id_usuario' => $usuario->id,
-        'sesion_nombre_usuario' => $usuario->nombre,
-        'sesion_foto_usuario' => $usuario->fotografia
-      );
-
-      $this->session->set_userdata($dataSesion);
-
-      redirect(base_url().'index.php/inicio');
+      
     }
-}
+  }
 
-  public function iniciarSesion()
+  /**
+   * Elimina la sesión actual y redirige a la página de login
+   *
+   * @return void
+   **/
+  public function salir()
   {
-    $data['titulo'] = "Iniciar sesión";
-    $data['pagina'] = "inicio/formInises_v";
-    $this->load->view('layouts/login', $data);
+    $this->session->sess_destroy();
+    redirect(base_url());
   }
 
 }

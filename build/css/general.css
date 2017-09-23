@@ -8,12 +8,9 @@
 .success-text {
   color: #1e5622; }
 
-.success-background, .btn-success {
+.success-background {
   background-color: #1e5622;
   color: white; }
-
-.btn-success:hover {
-  background-color: #328f38; }
 
 .warning-text {
   color: #E8E288; }
@@ -43,34 +40,8 @@
   font-size: 12px;
   color: #ac0000; }
 
-@font-face {
-  font-family: "Montserrat";
-  src: url("../fonts/Montserrat/Montserrat-Thin.ttf") format("truetype"); }
-
-@font-face {
-  font-family: "OpenSans";
-  src: url("../fonts/Open_Sans/OpenSans-Regular.ttf") format("truetype"); }
-
-.titulos, h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif; }
-
-h1 {
-  font-size: 30px; }
-
-h2 {
-  font-size: 26px; }
-
-h3 {
-  font-size: 23px; }
-
-h4 {
-  font-size: 19px; }
-
-h5 {
-  font-size: 17px; }
-
-h6 {
-  font-size: 14px; }
-
 .titulo-3 {
   color: #3c69db; }
+
+.req {
+  color: #ac0000; }

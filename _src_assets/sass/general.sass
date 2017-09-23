@@ -25,10 +25,6 @@ $secondary-color: #5B3D5F
 .success-background
   background-color: $success
   color: white
-.btn-success
-  @extend .success-background
-  &:hover
-    background-color: lighten($success, 15)
 
 
 .warning-text
@@ -55,40 +51,42 @@ $secondary-color: #5B3D5F
   background-color: $info
   color: black
 
-
 .form-error
   font-size: 12px
   color: $error
 
 
-@font-face
-  font-family: "Montserrat"
-  src: url("../fonts/Montserrat/Montserrat-Thin.ttf") format("truetype")
-
-@font-face
-  font-family: "OpenSans"
-  src: url("../fonts/Open_Sans/OpenSans-Regular.ttf") format("truetype")
-
-.titulos
-  font-family: 'Montserrat', sans-serif
-h1
-  @extend .titulos
-  font-size: 30px
-h2
-  @extend .titulos
-  font-size: 26px
-h3
-  @extend .titulos
-  font-size: 23px
-h4
-  @extend .titulos
-  font-size: 19px
-h5
-  @extend .titulos
-  font-size: 17px
-h6
-  @extend .titulos
-  font-size: 14px
+// @font-face
+//   font-family: "Montserrat"
+//   src: url("../fonts/Montserrat/Montserrat-Thin.ttf") format("truetype")
+//
+// @font-face
+//   font-family: "OpenSans"
+//   src: url("../fonts/Open_Sans/OpenSans-Regular.ttf") format("truetype")
+//
+// .titulos
+//   font-family: 'Montserrat', sans-serif
+// h1
+//   @extend .titulos
+//   font-size: 30px
+// h2
+//   @extend .titulos
+//   font-size: 26px
+// h3
+//   @extend .titulos
+//   font-size: 23px
+// h4
+//   @extend .titulos
+//   font-size: 19px
+// h5
+//   @extend .titulos
+//   font-size: 17px
+// h6
+//   @extend .titulos
+//   font-size: 14px
 
 .titulo-3
   color: $info
+
+.req
+  color: $error

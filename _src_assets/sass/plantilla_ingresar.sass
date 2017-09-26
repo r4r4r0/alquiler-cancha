@@ -6,6 +6,9 @@ $secondary-color: #5B3D5F
 *, *::before, *::after
   box-sizing: border-box
 
+body
+  color: black
+
 
 a
   color: #eee
@@ -98,3 +101,15 @@ a
 .titulo
   color: $accent-color
   font-size: 18px
+
+
+.has_account
+  display: flex
+  text-align: center
+  justify-content: center
+  a
+    color: $primary-color
+    text-align: center
+    padding: 10px
+    &:hover
+      color: lighten($primary-color, 25)

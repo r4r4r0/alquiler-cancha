@@ -57,6 +57,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
     </div>
 
+    <!-- Opción para registrase -->
+    <div class="has_account">
+      <a href="<?php echo base_url().'index.php/inicio/registrar' ?>">Crear nueva cuenta</a>
+    </div>
     </div>
 
   </body>

@@ -22,7 +22,7 @@ class Funciones_model extends CI_Model
 
   public function obtenerDatos()
   {
-    $consulta = $this->db->get($this->tabla, 20);
+    $consulta = $this->db->get($this->tabla, 500);
     return $consulta;
   }
 

@@ -52,3 +52,6 @@
 .img-table {
   max-width: 64px;
   border-radius: 3px; }
+
+.user-panel {
+  min-height: 100px; }

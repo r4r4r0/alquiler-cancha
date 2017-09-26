@@ -69,7 +69,7 @@ class VerificarAcceso{
     $this->metodosDeshabilitados        = [''];
 
     $this->controladoresHabilitados     = ['inicio'];
-    $this->metodosHabilitados           = ['index','salir', 'ingresar'];
+    $this->metodosHabilitados           = ['index','salir', 'ingresar', 'registrar'];
 
     $this->CI->load->helper('url');
     $this->CI->load->library('session');

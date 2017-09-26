@@ -180,13 +180,13 @@ class Inicio extends CI_Controller{
     $this->form_validation->set_rules('input-repcontra', 'Repetir contraseña', 'trim|required|matches[input-contra]', array('matches' => 'La contraseña no coincide con la que ha establecido.'));
 
     // Departamento
-    $this->form_validation->set_rules('input-departamento', 'Departamento', 'trim|required|numeric');
+    // $this->form_validation->set_rules('input-departamento', 'Departamento', 'trim|required|numeric');
 
     // Provincia
-    $this->form_validation->set_rules('input-provincia', 'Provincia', 'trim|required|numeric');
+    // $this->form_validation->set_rules('input-provincia', 'Provincia', 'trim|required|numeric');
 
     // Distrito
-    $this->form_validation->set_rules('input-distrito', 'Distrito', 'trim|required|numeric');
+    // $this->form_validation->set_rules('input-distrito', 'Distrito', 'trim|required|numeric');
 
     // Establece los delimitadores
     $this->form_validation->set_error_delimiters('<div class="form-error">', '</div>');
@@ -194,8 +194,8 @@ class Inicio extends CI_Controller{
     if ($this->form_validation->run() == FALSE)
     {
       $data['titulo'] = "Nuevo cliente";
-      $data['pagina'] = "inicio/registrar_v";
-      $this->load->view('layouts/base', $data);
+      // $data['pagina'] = "inicio/registro";
+      $this->load->view('layouts/registro', $data);
     }
     else
     {
@@ -288,7 +288,16 @@ class Inicio extends CI_Controller{
       $dataCliente['idusuario'] = $usuario->id;
       $this->cliente_model->insertar($dataCliente);
 
-      
+      // Registra la sesión del nuevo usuario
+      $datosSesion = array(
+					'sesion_id_usuario'         		=> $usuario->id,
+					'sesion_nombre_usuario'     		=> $usuario->nombre,
+          'sesion_foto_usuario'           => $usuario->fotografia,
+          'sesion_tipo_usuario'           => $usuario->idtipousuario
+			);
+			$this->session->set_userdata($datosSesion);
+
+      redirect(base_url().'index.php/campo/calendario');
     }
   }
 

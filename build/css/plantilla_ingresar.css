@@ -1,6 +1,9 @@
 *, *::before, *::after {
   box-sizing: border-box; }
 
+body {
+  color: black; }
+
 a {
   color: #eee;
   outline: 0;
@@ -86,3 +89,14 @@ a {
 .titulo {
   color: #1B9AAA;
   font-size: 18px; }
+
+.has_account {
+  display: flex;
+  text-align: center;
+  justify-content: center; }
+  .has_account a {
+    color: #7603d0;
+    text-align: center;
+    padding: 10px; }
+    .has_account a:hover {
+      color: #b356fd; }

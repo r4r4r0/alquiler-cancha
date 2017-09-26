@@ -115,12 +115,8 @@ class Inicio extends CI_Controller{
 			);
 			$this->session->set_userdata($datosSesion);
 
-      echo $this->session->userdata('sesion_id_usuario');
-      echo "<br>";
-      echo $this->session->userdata('sesion_nombre_usuario');
-
       redirect(base_url());
-
+      return;
     }
 
   }
